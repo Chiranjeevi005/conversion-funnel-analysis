@@ -106,27 +106,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 3. QUADRANT LABELS
                 ctx.setLineDash([]);
-                ctx.font = '800 8px Inter';
+                const isMobile = chart.width < 600;
+                ctx.font = `800 ${isMobile ? '7' : '9'}px Inter`;
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
                 ctx.textAlign = 'left';
                 
-                ctx.fillText('FIX DISCOVERY', left + 15, top + 25);
-                ctx.fillText('DROP / AUDIT', left + 15, bottom - 20);
-                ctx.fillText('SCALE SUCCESS', midX + 15, top + 25);
-                ctx.fillText('FIX CHECKOUT', midX + 15, bottom - 20);
+                const padding = isMobile ? 8 : 15;
+                ctx.fillText('FIX DISCOVERY', left + padding, top + (isMobile ? 15 : 25));
+                ctx.fillText('DROP / AUDIT', left + padding, bottom - (isMobile ? 10 : 20));
+                ctx.fillText('SCALE SUCCESS', midX + padding, top + (isMobile ? 15 : 25));
+                ctx.fillText('FIX CHECKOUT', midX + padding, bottom - (isMobile ? 10 : 20));
 
                 ctx.restore();
             },
             afterDatasetsDraw: (chart) => {
                 const { ctx } = chart;
                 ctx.save();
-                ctx.font = '700 8px Inter';
-                ctx.fillStyle = '#0F172A'; // Black labels for light mode
+                const isMobile = chart.width < 600;
+                ctx.font = `700 ${isMobile ? '7' : '8'}px Inter`;
+                ctx.fillStyle = '#1E293B';
                 ctx.textAlign = 'center';
                 
                 chart.getDatasetMeta(0).data.forEach((datapoint, index) => {
                     const item = categoryData[index];
-                    ctx.fillText(item.label, datapoint.x, datapoint.y - (item.r + 6));
+                    const labelPadding = isMobile ? item.r + 4 : item.r + 6;
+                    ctx.fillText(item.label, datapoint.x, datapoint.y - labelPadding);
                 });
                 ctx.restore();
             }

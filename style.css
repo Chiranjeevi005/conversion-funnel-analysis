@@ -61,6 +61,14 @@ body {
     gap: 16px;
 }
 
+@media (max-width: 1024px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .kpi-row { grid-template-columns: 1fr; }
+}
+
 .kpi-card {
     background: var(--bg-card);
     padding: 24px;
@@ -142,12 +150,21 @@ body {
 
 /* Horizontal Funnel */
 .funnel-container {
-    height: 180px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     padding: 0 10px;
+    min-height: 180px;
+}
+
+@media (max-width: 768px) {
+    .funnel-container {
+        flex-direction: column;
+        height: auto;
+        gap: 10px;
+        padding: 20px 0;
+    }
 }
 
 .funnel-stage {
@@ -177,6 +194,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 40px;
+}
+
+@media (max-width: 768px) {
+    .funnel-link {
+        width: 1px;
+        height: 40px;
+        min-width: auto;
+    }
 }
 
 .drop-label {
@@ -262,8 +288,29 @@ body {
 
 /* RESPONSIVENESS */
 @media (max-width: 1024px) {
-    .kpi-row { grid-template-columns: repeat(2, 1fr); }
     .middle-row { grid-template-columns: 1fr; }
-    .footer-strip { grid-template-columns: 1fr; border: none; }
-    .footer-branding { border: none; padding: 0; }
+    .footer-strip { 
+        grid-template-columns: 1fr; 
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .footer-branding { 
+        border: none; 
+        padding: 0; 
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+    .footer-branding img { width: 18px; height: 18px; }
+}
+
+@media (max-width: 600px) {
+    body { padding: 12px; }
+    .dashboard-header { flex-direction: column; text-align: center; gap: 12px; }
+    .header-description { max-width: 100%; }
+    .card-title { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .matrix-legend-row { flex-wrap: wrap; }
+    .funnel-stage.stage { width: 100%; max-width: 250px; height: 80px; }
+    .stage-label { margin-bottom: 2px; }
+    .kpi-value { font-size: 1.5rem; }
 }
