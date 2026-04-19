@@ -44,7 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
                     min: 0, max: 15,
-                    ticks: { callback: (v) => v + '%', color: '#64748B' }
+                    ticks: { 
+                        callback: (v) => v + '%', 
+                        color: '#64748B',
+                        font: { size: 10 }
+                    }
                 },
                 y: {
                     title: { 
@@ -55,10 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
                     min: 0, max: 80,
-                    ticks: { callback: (v) => v + '%', color: '#64748B' }
+                    ticks: { 
+                        callback: (v) => v + '%', 
+                        color: '#64748B',
+                        font: { size: 10 }
+                    }
                 }
             },
             plugins: {
+                legend: { display: false },
                 tooltip: {
                     enabled: true,
                     backgroundColor: 'rgba(255, 255, 255, 0.98)',
@@ -136,4 +145,109 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }]
     });
+
+    // --- 3. EXPORT LOGIC REDESIGNED ---
+    const btn = document.getElementById("downloadBtn");
+    const modal = document.getElementById("downloadModal");
+    const closeBtn = document.getElementById("closeModal");
+    const mainDownloadBtn = document.getElementById("mainDownloadBtn");
+    const formatCards = document.querySelectorAll(".format-card");
+    let selectedFormat = null;
+
+    btn.onclick = () => {
+        modal.classList.remove("hidden");
+        resetModalSelection();
+    };
+
+    closeBtn.onclick = () => modal.classList.add("hidden");
+
+    // Close on outside click
+    window.onclick = (event) => {
+        if (event.target == modal) {
+            modal.classList.add("hidden");
+        }
+    };
+
+    function resetModalSelection() {
+        selectedFormat = null;
+        formatCards.forEach(c => c.classList.remove("selected"));
+        mainDownloadBtn.classList.add("disabled");
+        mainDownloadBtn.innerText = "Select a format";
+    }
+
+    formatCards.forEach(card => {
+        card.onclick = () => {
+            formatCards.forEach(c => c.classList.remove("selected"));
+            card.classList.add("selected");
+            selectedFormat = card.getAttribute("data-format");
+            
+            mainDownloadBtn.classList.remove("disabled");
+            mainDownloadBtn.innerText = `Download ${selectedFormat}`;
+        }
+    });
+
+    function prepareDesktopView() {
+        const el = document.getElementById("dashboard");
+        const downloadBtn = document.getElementById("downloadBtn");
+        downloadBtn.style.display = "none";
+        el.style.width = "1200px";
+        el.style.maxWidth = "1200px";
+        el.style.transform = "scale(1)";
+        el.style.height = "auto";
+    }
+
+    function resetView() {
+        const el = document.getElementById("dashboard");
+        const downloadBtn = document.getElementById("downloadBtn");
+        downloadBtn.style.display = "";
+        el.style.width = "";
+        el.style.maxWidth = "";
+        el.style.height = "";
+    }
+
+    mainDownloadBtn.onclick = async () => {
+        if (!selectedFormat) return;
+
+        mainDownloadBtn.innerText = "Generating Report...";
+        mainDownloadBtn.classList.add("disabled");
+        
+        prepareDesktopView();
+        await new Promise(resolve => setTimeout(resolve, 150)); // Allow rendering
+        const element = document.getElementById("dashboard");
+
+        try {
+            const canvas = await html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                width: 1200,
+                height: element.scrollHeight,
+                windowWidth: 1200,
+                backgroundColor: "#F1F5F9"
+            });
+
+            if (selectedFormat === "JPG") {
+                const link = document.createElement("a");
+                link.download = `Conversion_Analysis_${new Date().toISOString().slice(0, 10)}.jpg`;
+                link.href = canvas.toDataURL("image/jpeg", 1.0);
+                link.click();
+            } else {
+                const imgData = canvas.toDataURL("image/png");
+                const { jsPDF } = window.jspdf || window;
+                if (!jsPDF) throw new Error("jsPDF missing");
+                
+                const pdf = new jsPDF("p", "mm", "a4");
+                const imgWidth = 210;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+                pdf.save(`Conversion_Report_${new Date().toISOString().slice(0, 10)}.pdf`);
+            }
+        } catch (err) {
+            console.error("Export Error:", err);
+            alert(`Failed to generate ${selectedFormat} report.`);
+        } finally {
+            resetView();
+            modal.classList.add("hidden");
+            resetModalSelection();
+        }
+    };
 });

@@ -12,22 +12,26 @@
         rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="dashboard-container">
+    <div id="dashboard" class="container dashboard-container">
         <!-- 1. HEADER -->
         <header class="dashboard-header">
             <div class="header-title">
                 <h1>Funnel Analytics & Conversion Optimization Dashboard</h1>
-                <p class="header-description">A data-driven view of funnel inefficiencies highlighting key drop-off points, translating insights into strategic actions for scalable growth.</p>
+                <p class="header-description">A data-driven view of funnel inefficiencies highlighting key drop-off
+                    points, translating insights into strategic actions for scalable growth.</p>
             </div>
+            <button id="downloadBtn" class="download-btn">Download Report</button>
         </header>
 
         <!-- 2. KPI ROW -->
-        <section class="kpi-row">
+        <section class="grid grid-cols-4 kpi-row">
             <div class="kpi-card">
                 <span class="kpi-label">TOTAL UNIQUE USERS</span>
                 <span class="kpi-value">407,283</span>
@@ -51,7 +55,7 @@
         </section>
 
         <!-- 3. MIDDLE ROW -->
-        <div class="middle-row">
+        <div class="grid grid-cols-middle middle-row">
             <section class="chart-card">
                 <div class="card-title">
                     <h2>CONVERSION FUNNEL STAGE ANALYSIS</h2>
@@ -117,13 +121,13 @@
                     <button class="leg-btn red">Deprioritize</button>
                 </div>
             </div>
-            <div class="matrix-container">
+            <div class="chart-container matrix-container">
                 <canvas id="categoryMatrixChart"></canvas>
             </div>
         </section>
 
         <!-- 5. FOOTER -->
-        <footer class="footer-strip">
+        <footer class="decision-grid footer-strip">
             <div class="footer-branding">
                 <img src="https://img.icons8.com/ios-filled/50/3B82F6/target.png" alt="Target Icon">
                 <span>STRATEGIC STRIP:</span>
@@ -145,6 +149,42 @@
                 <p>Inventory audit for Clocks and low-intent categories to minimize costs.</p>
             </div>
         </footer>
+    </div>
+
+    <!-- Export Modal Redesign -->
+    <div id="downloadModal" class="modal hidden">
+        <div class="modal-content redesigned">
+            <header class="modal-header">
+                <h3>Export Dashboard</h3>
+                <button id="closeModal" class="close-x">&times;</button>
+            </header>
+
+            <div class="modal-body">
+                <p class="context-msg">Download a high-resolution report. This export preserves layout, charts, and data
+                    for presentation use.</p>
+
+                <div class="format-selection">
+                    <div class="format-card" data-format="JPG">
+                        <div class="card-icon">🖼️</div>
+                        <div class="card-info">
+                            <span class="card-label">JPG Image</span>
+                            <span class="card-subtext">Best for quick sharing and presentations</span>
+                        </div>
+                    </div>
+
+                    <div class="format-card recommended" data-format="PDF">
+                        <div class="card-icon">📄</div>
+                        <div class="card-info">
+                            <span class="card-label">PDF Report</span>
+                            <span class="card-subtext">Best for formal reports and documentation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="mainDownloadBtn" class="download-cta disabled">Select a format</button>
+                <p class="secondary-cancel">Click outside or press ✕ to cancel</p>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
