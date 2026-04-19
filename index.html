@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Strategy Dashboard</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <!-- 1. HEADER -->
+        <header class="dashboard-header">
+            <div class="header-title">
+                <h1>Funnel Analytics & Conversion Optimization Dashboard</h1>
+                <p class="header-description">A data-driven view of funnel inefficiencies highlighting key drop-off points, translating insights into strategic actions for scalable growth.</p>
+            </div>
+        </header>
+
+        <!-- 2. KPI ROW -->
+        <section class="kpi-row">
+            <div class="kpi-card">
+                <span class="kpi-label">TOTAL UNIQUE USERS</span>
+                <span class="kpi-value">407,283</span>
+            </div>
+            <div class="kpi-card critical-card">
+                <span class="kpi-label">OVERALL CONVERSION</span>
+                <span class="kpi-value">5.24%</span>
+                <span class="kpi-subtext">Major Drop at Cart</span>
+                <span class="kpi-badge">CRITICAL</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">ACTUAL REVENUE</span>
+                <span class="kpi-value">₹5.12M</span>
+            </div>
+            <div class="kpi-card critical-card">
+                <span class="kpi-label">REVENUE LEAKAGE</span>
+                <span class="kpi-value">₹52.97M</span>
+                <span class="kpi-subtext">91% Capture Gap</span>
+                <span class="kpi-badge">HIGH IMPACT</span>
+            </div>
+        </section>
+
+        <!-- 3. MIDDLE ROW -->
+        <div class="middle-row">
+            <section class="chart-card">
+                <div class="card-title">
+                    <h2>CONVERSION FUNNEL STAGE ANALYSIS</h2>
+                    <span class="badge">91% MASSIVE DROP-OFF</span>
+                </div>
+                <div class="funnel-container">
+                    <div class="funnel-stage stage viewed">
+                        <span class="stage-label">VIEWED</span>
+                        <span class="stage-value">406,863</span>
+                        <span class="stage-perc">100%</span>
+                    </div>
+                    <div class="funnel-link">
+                        <span class="drop-label">↓ 91% DROP</span>
+                    </div>
+                    <div class="funnel-stage stage cart">
+                        <span class="stage-label">CART</span>
+                        <span class="stage-value">36,952</span>
+                        <span class="stage-perc">9.1%</span>
+                    </div>
+                    <div class="funnel-link">
+                        <span class="drop-label">↓ 42% DROP</span>
+                    </div>
+                    <div class="funnel-stage stage purchase">
+                        <span class="stage-label">PURCHASE</span>
+                        <span class="stage-value">21,304</span>
+                        <span class="stage-perc">5.2%</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="chart-card">
+                <div class="card-title">
+                    <h2>REVENUE CAPTURE RATIO</h2>
+                </div>
+                <div class="revenue-container">
+                    <p class="potential-rev">₹58.09M Potential Revenue</p>
+                    <div class="revenue-bar">
+                        <div class="segment actual">8.8%</div>
+                        <div class="segment lost">91.2% LOST</div>
+                    </div>
+                    <div class="revenue-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: var(--success);"></span>
+                            Actual Revenue (₹5.12M)
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: var(--danger);"></span>
+                            Revenue Leakage (₹52.97M)
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 4. CATEGORY MATRIX -->
+        <section class="chart-card matrix-card">
+            <div class="card-title">
+                <h2>CATEGORY DECISION MATRIX (INTEREST VS EFFICIENCY)</h2>
+                <div class="matrix-legend-row">
+                    <button class="leg-btn green">Scale</button>
+                    <button class="leg-btn blue">Fix PD</button>
+                    <button class="leg-btn yellow">Fix Checkout</button>
+                    <button class="leg-btn red">Deprioritize</button>
+                </div>
+            </div>
+            <div class="matrix-container">
+                <canvas id="categoryMatrixChart"></canvas>
+            </div>
+        </section>
+
+        <!-- 5. FOOTER -->
+        <footer class="footer-strip">
+            <div class="footer-branding">
+                <img src="https://img.icons8.com/ios-filled/50/3B82F6/target.png" alt="Target Icon">
+                <span>STRATEGIC STRIP:</span>
+            </div>
+            <div class="action-card scale">
+                <strong>SCALE</strong>
+                <p>Aggressively invest in Videocards & Printers based on efficiency peaks.</p>
+            </div>
+            <div class="action-card fix">
+                <strong>FIX PDP</strong>
+                <p>Optimize Discovery path for Vacuum & Juicers where traffic is low.</p>
+            </div>
+            <div class="action-card checkout">
+                <strong>FIX CHECKOUT</strong>
+                <p>Reduce friction for Laptops showing high intent but checkout drops.</p>
+            </div>
+            <div class="action-card drop">
+                <strong>DROP</strong>
+                <p>Inventory audit for Clocks and low-intent categories to minimize costs.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

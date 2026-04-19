@@ -1,0 +1,269 @@
+:root {
+    --bg-main: #F1F5F9;
+    --bg-card: #FFFFFF;
+    --bg-header: #FFFFFF;
+    --bg-accent: #E2E8F0;
+    --primary: #2563EB;
+    --success: #16A34A;
+    --danger: #DC2626;
+    --warning: #D97706;
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --border: rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 1. TOP HEADER */
+.dashboard-header {
+    background: var(--bg-header);
+    padding: 12px 24px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border);
+}
+
+.header-title { display: flex; flex-direction: column; gap: 4px; }
+.header-title h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.2px; }
+.header-description { font-size: 0.75rem; color: var(--text-secondary); max-width: 800px; line-height: 1.4; }
+
+.header-right { display: flex; align-items: center; gap: 20px; }
+.last-updated { font-size: 0.75rem; color: var(--text-secondary); }
+.export-btn { background: var(--bg-accent); border: 1px solid var(--border); color: white; padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
+
+/* 2. KPI CARDS */
+.kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.kpi-card {
+    background: var(--bg-card);
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 125px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.kpi-card.critical-card {
+    border: 1px solid var(--danger);
+}
+
+.kpi-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.kpi-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.kpi-subtext {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #EF4444;
+    margin-top: 6px;
+}
+
+.kpi-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #EF4444;
+    color: #FFFFFF;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+/* 3. MIDDLE ROW (FUNNEL & REVENUE) */
+.middle-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.chart-card {
+    background: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.card-title h2 { font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+.card-title .badge { font-size: 0.7rem; font-weight: 900; color: var(--danger); opacity: 0.8; }
+
+/* Horizontal Funnel */
+.funnel-container {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 10px;
+}
+
+.funnel-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 4px;
+    padding: 15px;
+    z-index: 2;
+}
+
+.stage.viewed { width: 130px; height: 130px; background: #3B82F6; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); }
+.stage.cart { width: 100px; height: 100px; background: #60A5FA; }
+.stage.purchase { width: 80px; height: 80px; background: #93C5FD; }
+
+.stage-label { font-size: 0.65rem; font-weight: 700; color: #FFFFFF; opacity: 0.9; margin-bottom: 4px; }
+.stage-value { font-size: 1rem; font-weight: 900; color: #FFFFFF; }
+.stage-perc { font-size: 0.7rem; font-weight: 600; color: #FFFFFF; opacity: 0.8; }
+
+.funnel-link {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-label {
+    background: #FFFFFF;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.08);
+}
+
+/* Revenue Capture Bar */
+.potential-rev { text-align: right; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; }
+.revenue-bar { height: 28px; background: #F1F5F9; border-radius: 4px; overflow: hidden; display: flex; border: 1px solid var(--border); }
+.revenue-bar .segment { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; color: #FFFFFF; }
+.segment.actual { background: var(--success); width: 8.8%; }
+.segment.lost { background: var(--danger); flex: 1; opacity: 0.9; }
+
+.revenue-legend {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-secondary); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* 4. FULL WIDTH MATRIX */
+.matrix-card { grid-column: span 12; }
+.matrix-container { height: 300px; padding: 20px; }
+
+.matrix-legend-row { display: flex; gap: 10px; }
+.leg-btn { 
+    padding: 4px 12px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; 
+    border: 1px solid var(--border); background: transparent; color: var(--text-secondary);
+}
+.leg-btn.green { border-color: var(--success); color: var(--success); background: rgba(34, 197, 94, 0.05); }
+.leg-btn.blue { border-color: var(--primary); color: var(--primary); background: rgba(59, 130, 246, 0.05); }
+.leg-btn.yellow { border-color: var(--warning); color: var(--warning); background: rgba(245, 158, 11, 0.05); }
+.leg-btn.red { border-color: var(--danger); color: var(--danger); background: rgba(239, 68, 68, 0.05); }
+
+/* 5. FOOTER STRIP */
+.footer-strip {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.footer-branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding-right: 20px;
+    border-right: 1px solid var(--border);
+}
+.footer-branding img { width: 24px; height: 24px; opacity: 0.8; }
+.footer-branding span { font-size: 0.65rem; font-weight: 900; text-transform: uppercase; color: var(--primary); text-align: center; line-height: 1.1; }
+
+.action-card {
+    background: #F1F5F9;
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--text-secondary);
+}
+.action-card.scale { border-left-color: var(--success); }
+.action-card.fix { border-left-color: var(--primary); }
+.action-card.checkout { border-left-color: var(--warning); }
+.action-card.drop { border-left-color: var(--danger); }
+
+.action-card strong { display: block; font-size: 0.7rem; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; opacity: 0.6; }
+.action-card.scale strong { color: var(--success); opacity: 1; }
+.action-card.fix strong { color: var(--primary); opacity: 1; }
+.action-card.checkout strong { color: var(--warning); opacity: 1; }
+.action-card.drop strong { color: var(--danger); opacity: 1; }
+
+.action-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+
+/* RESPONSIVENESS */
+@media (max-width: 1024px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .middle-row { grid-template-columns: 1fr; }
+    .footer-strip { grid-template-columns: 1fr; border: none; }
+    .footer-branding { border: none; padding: 0; }
+}
